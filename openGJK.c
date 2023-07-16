@@ -1,3 +1,5 @@
+// clang-format off
+
 //                           _____      _ _  __                                   //
 //                          / ____|    | | |/ /                                   //
 //    ___  _ __   ___ _ __ | |  __     | | ' /                                    //
@@ -198,7 +200,7 @@ projectOnPlane(const gkFloat* restrict p, const gkFloat* restrict q, const gkFlo
   }
 }
 
-inline static int
+inline int
 hff1(const gkFloat* restrict p, const gkFloat* restrict q) {
   gkFloat tmp = 0;
 
@@ -212,7 +214,7 @@ hff1(const gkFloat* restrict p, const gkFloat* restrict q) {
   return 0;
 }
 
-inline static int
+inline int
 hff2(const gkFloat* restrict p, const gkFloat* restrict q, const gkFloat* restrict r) {
   gkFloat ntmp[3];
   gkFloat n[3], pq[3], pr[3];
@@ -230,7 +232,7 @@ hff2(const gkFloat* restrict p, const gkFloat* restrict q, const gkFloat* restri
   return dotProduct(p, n) < 0; // Discard r if true
 }
 
-inline static int
+inline int
 hff3(const gkFloat* restrict p, const gkFloat* restrict q, const gkFloat* restrict r) {
   gkFloat n[3], pq[3], pr[3];
 

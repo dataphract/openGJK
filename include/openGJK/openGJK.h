@@ -1,3 +1,5 @@
+// clang-format off
+
 //                           _____      _ _  __                                   //
 //                          / ____|    | | |/ /                                   //
 //    ___  _ __   ___ _ __ | |  __     | | ' /                                    //
@@ -62,6 +64,10 @@ typedef struct gkSimplex_ {
   int nvrtx;          /*!< Number of points defining the simplex. */
   gkFloat vrtx[4][3]; /*!< Coordinates of the points of the simplex. */
 } gkSimplex;
+
+int hff1(const gkFloat* restrict p, const gkFloat* restrict q);
+int hff2(const gkFloat* restrict p, const gkFloat* restrict q, const gkFloat* restrict r);
+int hff3(const gkFloat* restrict p, const gkFloat* restrict q, const gkFloat* restrict r);
 
 /*! @brief Invoke the GJK algorithm to compute the minimum distance between two polytopes.
    *
