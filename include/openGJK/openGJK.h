@@ -65,6 +65,16 @@ typedef struct gkSimplex_ {
   gkFloat vrtx[4][3]; /*!< Coordinates of the points of the simplex. */
 } gkSimplex;
 
+/*! @brief Support function pointer type.
+ *
+ * Calculates the supporting point for the shape in the direction given by v and stores it in s. */
+typedef void (*gkSupportFunc)(void* restrict shape, const gkFloat* restrict v, gkFloat* restrict s);
+
+typedef struct gkShape_ {
+  void *shape;
+  gkSupportFunc support_func;
+} gkShape;
+
 int hff1(const gkFloat* restrict p, const gkFloat* restrict q);
 int hff2(const gkFloat* restrict p, const gkFloat* restrict q, const gkFloat* restrict r);
 int hff3(const gkFloat* restrict p, const gkFloat* restrict q, const gkFloat* restrict r);

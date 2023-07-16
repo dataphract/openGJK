@@ -597,15 +597,21 @@ S3D(gkSimplex* s, gkFloat* v) {
   }
 }
 
-inline static void
-support(gkPolytope* restrict body, const gkFloat* restrict v) {
+void
+support_polytope(void* restrict shape, const gkFloat* restrict v, gkFloat* restrict supp) {
   gkFloat s, maxs;
   gkFloat* vrt;
+  gkPolytope* restrict body = shape;
   int better = -1;
 
-  maxs = dotProduct(body->s, v);
+  if (!body->numpoints) {
+    mexPrintf("\nERROR:\tno points in polytope");
+    return;
+  }
 
-  for (int i = 0; i < body->numpoints; ++i) {
+  maxs = dotProduct(body->coord[0], v);
+
+  for (int i = 1; i < body->numpoints; ++i) {
     vrt = body->coord[i];
     s = dotProduct(vrt, v);
     if (s > maxs) {
@@ -615,10 +621,24 @@ support(gkPolytope* restrict body, const gkFloat* restrict v) {
   }
 
   if (better != -1) {
-    body->s[0] = body->coord[better][0];
-    body->s[1] = body->coord[better][1];
-    body->s[2] = body->coord[better][2];
+    supp[0] = body->coord[better][0];
+    supp[1] = body->coord[better][1];
+    supp[2] = body->coord[better][2];
   }
+}
+
+inline static void
+shape_support(gkShape* restrict shape, const gkFloat* restrict v, gkFloat* restrict s) {
+  (shape->support_func)(shape->shape, v, s);
+}
+
+inline static void
+support(gkPolytope* restrict body, const gkFloat* restrict v) {
+  gkShape shape;
+  shape.shape = body;
+  shape.support_func = support_polytope;
+
+  shape_support(&shape, v, body->s);
 }
 
 inline static void
